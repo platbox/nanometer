@@ -1,0 +1,29 @@
+@startuml
+participant Клиент
+box "Nanometer"
+  participant Метрика
+  participant Репортёр
+end box
+participant Graphite
+
+create Метрика
+Клиент -> Метрика : nanometer:create
+Клиент -> Метрика : nanometer:notify
+Клиент -> Метрика : nanometer:notify
+...несколько раз...
+Метрика <- Репортёр : nanometer:acquire
+activate Метрика
+Метрика --> Репортёр : [значения метрики]
+
+Репортёр -> Graphite : отправка
+group Таймаут или другая ошибка
+  Репортёр <-- Graphite : ошибка send
+  Метрика <- Репортёр : nanometer:release
+else нет ошибки
+  Метрика <- Репортёр : nanometer:reset
+  deactivate Метрика
+end
+Клиент -> Метрика : nanometer:notify
+...и так далее...
+hide footbox
+@enduml

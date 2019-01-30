@@ -1,0 +1,16 @@
+{application, nanometer,
+ [{description, "An OTP application"},
+  {vsn, "0.2.7"},
+  {registered, []},
+  {mod, { nanometer_app, []}},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, []},
+  {links, []}
+ ]}.
